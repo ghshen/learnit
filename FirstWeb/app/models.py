@@ -8,8 +8,9 @@ ROLE_ADMIN = 1
 
 class User(db.Model):
     id = Column(sqlalchemy.Integer,primary_key = True)
-    nickname = Column(sqlalchemy.String(64),index = True,unique = True)
-    email = Column(sqlalchemy.String(120),index = True, unique = True)
+    username = Column(sqlalchemy.String(16),index = True,unique = True)
+    passwd = Column(sqlalchemy.String(32))
+    email = Column(sqlalchemy.String(32),index = True, unique = True)
     role = Column(sqlalchemy.SmallInteger,default = ROLE_USER)
     posts = relationship('Post', backref = 'author',lazy = 'dynamic')
     
@@ -26,7 +27,7 @@ class User(db.Model):
         return unicode(self.id)
     
     def __repr__(self):
-        return '<User %r>' %(self.nickname)
+        return '<User %r>' %(self.username)
 
 class Post(db.Model):
     id = Column(sqlalchemy.Integer,primary_key = True)
